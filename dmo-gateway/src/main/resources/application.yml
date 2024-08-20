@@ -24,7 +24,7 @@ spring:
             allowedHeaders:
               - "*" # 允许在请求中携带的头信息
       routes:
-        - id: demo_backend
+        - id: demo-backend
           uri: http://localhost:8848
           predicates:
             - Path=/api/**
@@ -32,10 +32,6 @@ spring:
         - id: flow-api
           uri: http://localhost:8080
           predicates:
-            - Path=/flow/**
-
-oracle-mall:
-  jwt:
-    expire: 604800000
-    token-name: token
-    secret-key: huangyijielinghuangyijielinghuangyijieling
+            - Path=/engine/**
+          filters:
+            - StripPrefix=1

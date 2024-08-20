@@ -2,7 +2,10 @@ package com.yupi.project.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yupi.project.client.FlowClient;
+import com.yupi.project.common.BaseResponse;
 import com.yupi.project.common.ErrorCode;
+import com.yupi.project.common.pojo.dto.AuthDTO;
 import com.yupi.project.exception.BusinessException;
 import com.yupi.project.mapper.UserMapper;
 import com.yupi.project.model.entity.User;
@@ -26,11 +29,11 @@ import static com.yupi.project.constant.UserConstant.USER_LOGIN_STATE;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-        implements UserService {
-
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private FlowClient flowClient;
 
     /**
      * 盐值，混淆密码
@@ -101,6 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
+        user.setToken(getToken(user.getUserName()));
         return user;
     }
 
@@ -156,6 +160,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return true;
     }
 
+    private String getToken(String userNo) {
+        AuthDTO authDTO = AuthDTO.builder()
+                .userId(userNo)
+                .appid("demo")
+                .secret("b5952c5490e8451696f1d96c4b57477b")
+                .build();
+        BaseResponse<String> authResult = flowClient.authToken(authDTO);
+        if(authResult.getCode() != 0){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+        }
+        return authResult.getData();
+    }
 }
 
 

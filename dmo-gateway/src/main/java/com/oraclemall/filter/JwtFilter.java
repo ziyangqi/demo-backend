@@ -13,11 +13,8 @@ public class JwtFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        ServerWebExchange newExchange = exchange.mutate().
-                request(request.mutate()
-                            .build()).build();
-        return chain.filter(newExchange);
+        System.out.println(exchange.getRequest());
+        return chain.filter(exchange);
     }
 
     @Override

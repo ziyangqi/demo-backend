@@ -4,3 +4,6 @@ spring:
     url: jdbc:mysql://localhost:3306/zyapi
     username: root
     password: 123456
+feign:
+  flow:
+    url: http://localhost:8080

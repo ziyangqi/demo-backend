@@ -2,6 +2,8 @@ spring:
   application:
     name: api-backend
   # DataSource Config
+  profiles:
+    active: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/zyapi
@@ -19,6 +21,7 @@ spring:
     port: 6379
     host: localhost
     database: 0
+
 server:
   port: 8848
   servlet:
