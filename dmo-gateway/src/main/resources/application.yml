@@ -1,0 +1,41 @@
+server:
+  port: 7529
+
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - '*' #跨域处理 允许所有的域
+            allowCredentials: true # 是否允许携带cookie
+            allowedMethods: # 支持的方法
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders:
+              - "*" # 允许在请求中携带的头信息
+      routes:
+        - id: demo_backend
+          uri: http://localhost:8848
+          predicates:
+            - Path=/api/**
+
+        - id: flow-api
+          uri: http://localhost:8080
+          predicates:
+            - Path=/flow/**
+
+oracle-mall:
+  jwt:
+    expire: 604800000
+    token-name: token
+    secret-key: huangyijielinghuangyijielinghuangyijieling
