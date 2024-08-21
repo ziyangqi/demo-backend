@@ -84,10 +84,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
         }
-        if (userAccount.length() < 4) {
+        if (userAccount.length() < 1) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号错误");
         }
-        if (userPassword.length() < 8) {
+        if (userPassword.length() < 1) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码错误");
         }
         // 2. 加密
@@ -167,7 +167,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .secret("b5952c5490e8451696f1d96c4b57477b")
                 .build();
         BaseResponse<String> authResult = flowClient.authToken(authDTO);
-        if(authResult.getCode() != 0){
+        if(authResult.getCode() != 200){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);
         }
         return authResult.getData();

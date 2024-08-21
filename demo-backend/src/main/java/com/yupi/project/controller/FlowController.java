@@ -29,7 +29,7 @@ public class FlowController {
     @PostMapping("/agree")
     public BaseResponse<String> agree(@RequestBody @NotNull TaskAgreeDTO taskAgreeDTO){
         BaseResponse result = flowClient.agreeFlow(taskAgreeDTO);
-        if(result.getCode() != 0){
+        if(result.getCode() != 200){
             responseConcurrentHashMap.remove(taskAgreeDTO.getThreadId());
             return result;
         }
@@ -43,7 +43,7 @@ public class FlowController {
     @PostMapping("/reject")
     public BaseResponse reject(@RequestBody @NotNull TaskRejectDTO taskRejectDTO) {
         BaseResponse result = flowClient.rejectFlow(taskRejectDTO);
-        if(result.getCode() != 0){
+        if(result.getCode() != 200){
             responseConcurrentHashMap.remove(taskRejectDTO.getThreadId());
             return result;
         }
@@ -58,7 +58,7 @@ public class FlowController {
         CallbackDTO callbackDTO = new CallbackDTO();
         callbackDTO.setThreadId(Thread.currentThread().getId());
         BaseResponse result = flowClient.cancelFlow(procId,callbackDTO);
-        if(result.getCode() != 0){
+        if(result.getCode() != 200){
             responseConcurrentHashMap.remove(callbackDTO.getThreadId());
             return result;
         }
@@ -72,7 +72,7 @@ public class FlowController {
     @PostMapping("/transfer")
     public BaseResponse transfer(@RequestBody @NotNull TaskTransferDTO taskTransferDTO) {
         BaseResponse result = flowClient.transferFlow(taskTransferDTO);
-        if(result.getCode() != 0){
+        if(result.getCode() != 200){
             responseConcurrentHashMap.remove(taskTransferDTO.getThreadId());
             return result;
         }
