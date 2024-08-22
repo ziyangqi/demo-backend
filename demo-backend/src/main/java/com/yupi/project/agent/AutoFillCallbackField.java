@@ -5,10 +5,12 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class AutoFillCallbackField {
-    @Pointcut("execution(public * com.yupi.project.controller.FlowController(..)) && @annotation(com.yupi.project.annotation.AutoFill)")
+    @Pointcut("execution(public * com.yupi.project.controller.FlowController.*(..)) && @annotation(com.yupi.project.annotation.AutoFill)")
     public void p() {}
     @Before("p()")
     public void before(JoinPoint joinPoint) {

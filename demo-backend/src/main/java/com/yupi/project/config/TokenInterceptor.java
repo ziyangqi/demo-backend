@@ -20,9 +20,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (token == null) {
             token = request.getParameter("token");
         }
-        if (token == null) {
-            return false;
-        }
         TokenThreadUtil.setToken(token);
         return true;
     }

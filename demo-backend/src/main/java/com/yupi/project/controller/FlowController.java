@@ -78,7 +78,7 @@ public class FlowController {
         }
         return asyncGetResult(taskTransferDTO.getThreadId());
     }
-    @PostMapping("/callback/{uuid}")
+    @PostMapping("/callback/{threadId}")
     public BaseResponse callback(@RequestBody @NotNull BaseResponse baseResponse, @PathVariable Long threadId) {
         responseConcurrentHashMap.put(threadId, baseResponse);
         return ResultUtils.success(null);

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CallbackDTO {
     private String type = "HTTP";
-    private String url = "http://localhost:8848/api/flow/callback/";
+    private String url = "";
     private Long threadId;
 }

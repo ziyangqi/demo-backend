@@ -23,5 +23,4 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/flow/**");
     }
-
 }
