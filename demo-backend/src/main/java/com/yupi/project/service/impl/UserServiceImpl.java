@@ -167,7 +167,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .secret("b5952c5490e8451696f1d96c4b57477b")
                 .build();
         BaseResponse<String> authResult = flowClient.authToken(authDTO);
-        if(authResult.getCode() != 0){
+        if(authResult.getCode() != 200){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);
         }
         return authResult.getData();
