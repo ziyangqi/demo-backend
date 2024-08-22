@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class CallbackDTO {
     private String type = "HTTP";
-    private String url = "";
     private Long threadId;
 }
