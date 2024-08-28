@@ -12,5 +12,5 @@ public interface RoleService {
 
     void bindRole(Long userId, Long roleId);
 
-    BaseResponse<List<String>> getRoleById(Long userId);
+    BaseResponse<String> getRoleById(Long userId);
 }

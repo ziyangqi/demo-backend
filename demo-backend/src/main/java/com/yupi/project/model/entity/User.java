@@ -69,5 +69,9 @@ public class User implements Serializable {
     @TableField(exist = false)
     private String token;
     @TableField(exist = false)
+    private String roleToken;
+
+
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

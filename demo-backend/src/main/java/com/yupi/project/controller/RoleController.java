@@ -20,7 +20,7 @@ public class RoleController {
         return roleService.getRole();
     }
     @GetMapping("/{userId}")
-    public BaseResponse<List<String>> getRoles(@PathVariable Long userId) {
+    public BaseResponse<String> getRoles(@PathVariable Long userId) {
         return roleService.getRoleById(userId);
     }
     @PostMapping("/add/{role}")

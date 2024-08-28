@@ -7,6 +7,7 @@ import com.yupi.project.common.BaseResponse;
 import com.yupi.project.common.ErrorCode;
 import com.yupi.project.common.pojo.dto.AuthDTO;
 import com.yupi.project.exception.BusinessException;
+import com.yupi.project.mapper.RoleMapper;
 import com.yupi.project.mapper.UserMapper;
 import com.yupi.project.model.entity.User;
 import com.yupi.project.service.UserService;
@@ -34,6 +35,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Resource
     private FlowClient flowClient;
+
+    @Resource
+    private RoleMapper roleMapper;
 
     /**
      * 盐值，混淆密码
@@ -105,6 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
         user.setToken(getToken(user.getUserName()));
+        user.setRoleToken(getToken(roleMapper.selectById(user.getId())));
         return user;
     }
 

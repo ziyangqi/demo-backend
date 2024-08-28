@@ -1,6 +1,7 @@
 package com.yupi.project.service.impl;
 
 import com.yupi.project.common.BaseResponse;
+import com.yupi.project.common.ResultUtils;
 import com.yupi.project.mapper.RoleMapper;
 import com.yupi.project.model.entity.Role;
 import com.yupi.project.service.RoleService;
@@ -15,7 +16,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleMapper roleMapper;
     @Override
     public BaseResponse<List<Role>> getRole() {
-        return roleMapper.select();
+        return ResultUtils.success(roleMapper.select());
     }
     @Override
     public void addRole(String role) {
@@ -26,9 +27,8 @@ public class RoleServiceImpl implements RoleService {
     public void bindRole(Long userId, Long roleId) {
         roleMapper.insert(userId, roleId);
     }
-
     @Override
-    public BaseResponse<List<String>> getRoleById(Long userId) {
-        return roleMapper.selectById(userId);
+    public BaseResponse<String> getRoleById(Long userId) {
+        return ResultUtils.success(roleMapper.selectById(userId)) ;
     }
 }
