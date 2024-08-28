@@ -28,7 +28,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public BaseResponse<List<Role>> getRoleById(Long userId) {
+    public BaseResponse<List<String>> getRoleById(Long userId) {
         return roleMapper.selectById(userId);
     }
 }
