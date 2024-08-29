@@ -8,12 +8,18 @@ import com.yupi.project.common.ResultUtils;
 import com.yupi.project.common.pojo.dto.TaskAgreeDTO;
 import com.yupi.project.common.pojo.dto.TaskRejectDTO;
 import com.yupi.project.common.pojo.dto.TaskTransferDTO;
+import com.yupi.project.common.pojo.dto.TodoTaskQueryDTO;
 import com.yupi.project.common.pojo.dto.base.CallbackDTO;
 import com.yupi.project.exception.BusinessException;
+import com.yupi.project.exception.GlobalExceptionHandler;
+import com.yupi.project.util.TokenThreadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -82,6 +88,31 @@ public class FlowController {
     public BaseResponse callback(@RequestBody @NotNull BaseResponse baseResponse, @PathVariable Long threadId) {
         responseConcurrentHashMap.put(threadId, baseResponse);
         return ResultUtils.success(null);
+    }
+
+    // 查询流程引起代办的列表
+    @PostMapping("/queryTaskList")
+    public BaseResponse queryTaskList(@RequestBody @NotNull TodoTaskQueryDTO todoTaskQueryDTO) {
+//        // 获得第一次查询的List
+
+        BaseResponse todoTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
+        if (todoTaskList.getCode() != 200){
+            throw new BusinessException("系统异常");
+        }
+        // 获取roleToken
+        String roleToken = todoTaskQueryDTO.getRoleToken();
+        // 设置roleToken
+        TokenThreadUtil.setToken(roleToken);
+        BaseResponse todoRoleTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
+        if (todoRoleTaskList.getCode() != 200){
+            throw new BusinessException("系统异常");
+        }
+        List<Object> roleData = (ArrayList<Object>)todoRoleTaskList.getData();
+        List<Object> data = (ArrayList<Object>)todoTaskList.getData();
+        roleData.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "false");});
+        data.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "true");});
+        data.addAll(roleData);
+        return ResultUtils.success(data);
     }
 
 

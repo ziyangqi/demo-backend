@@ -9,7 +9,7 @@ import com.yupi.project.common.ErrorCode;
  */
 public class BusinessException extends RuntimeException {
 
-    private final int code;
+    private  int code = 201;
 
     public BusinessException(int code, String message) {
         super(message);
@@ -19,6 +19,11 @@ public class BusinessException extends RuntimeException {
     public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();
+    }
+
+
+    public BusinessException(String message) {
+        super(message);
     }
 
     public BusinessException(ErrorCode errorCode, String message) {

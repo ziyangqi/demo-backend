@@ -1,10 +1,7 @@
 package com.yupi.project.client;
 
 import com.yupi.project.common.BaseResponse;
-import com.yupi.project.common.pojo.dto.AuthDTO;
-import com.yupi.project.common.pojo.dto.TaskAgreeDTO;
-import com.yupi.project.common.pojo.dto.TaskRejectDTO;
-import com.yupi.project.common.pojo.dto.TaskTransferDTO;
+import com.yupi.project.common.pojo.dto.*;
 import com.yupi.project.common.pojo.dto.base.CallbackDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,4 +20,7 @@ public interface FlowClient {
     BaseResponse cancelFlow(@PathVariable String procId, @RequestBody CallbackDTO callbackDTO);
     @PostMapping("/flow/transfer")
     BaseResponse transferFlow(@RequestBody TaskTransferDTO transferDTO);
+
+    @PostMapping("/task/wait/list")
+    BaseResponse getTodoTaskList(@RequestBody TodoTaskQueryDTO todoTaskQueryDTO);
 }

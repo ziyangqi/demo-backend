@@ -22,4 +22,8 @@ public class TodoTaskQueryDTO extends BaseBo {
     private String endTime = null;
     @ApiModelProperty(value = "开始时间")
     private String startTime = null;
+
+//    private String token;
+
+    private String roleToken;
 }
