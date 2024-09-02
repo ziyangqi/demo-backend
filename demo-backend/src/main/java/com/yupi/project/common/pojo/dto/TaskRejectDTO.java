@@ -15,7 +15,5 @@ public class TaskRejectDTO extends CallbackDTO {
     private String priority;
     private String newActivityId;
 
-
-
     private String userId;
 }

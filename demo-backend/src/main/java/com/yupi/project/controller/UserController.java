@@ -74,7 +74,6 @@ public class UserController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User user = userService.userLogin(userAccount, userPassword, request);
-
         return ResultUtils.success(user);
     }
 

@@ -88,30 +88,30 @@ public class FlowController {
         return ResultUtils.success(null);
     }
 
-    // 查询流程引起代办的列表
-    @PostMapping("/queryTaskList")
-    public BaseResponse queryTaskList(@RequestBody @NotNull TodoTaskQueryDTO todoTaskQueryDTO) {
-//        // 获得第一次查询的List
-
-        BaseResponse todoTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
-        if (todoTaskList.getCode() != 200){
-            throw new BusinessException("系统异常");
-        }
-        // 获取roleToken
-        String roleToken = todoTaskQueryDTO.getRoleToken();
-        // 设置roleToken
-        TokenThreadUtil.setToken(roleToken);
-        BaseResponse todoRoleTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
-        if (todoRoleTaskList.getCode() != 200){
-            throw new BusinessException("系统异常");
-        }
-        List<Object> roleData = (ArrayList<Object>)todoRoleTaskList.getData();
-        List<Object> data = (ArrayList<Object>)todoTaskList.getData();
-        roleData.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "false");});
-        data.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "true");});
-        data.addAll(roleData);
-        return ResultUtils.success(data);
-    }
+//    // 查询流程引起代办的列表
+//    @PostMapping("/queryTaskList")
+//    public BaseResponse queryTaskList(@RequestBody @NotNull TodoTaskQueryDTO todoTaskQueryDTO) {
+////        // 获得第一次查询的List
+//
+//        BaseResponse todoTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
+//        if (todoTaskList.getCode() != 200){
+//            throw new BusinessException("系统异常");
+//        }
+//        // 获取roleToken
+//        String roleToken = todoTaskQueryDTO.getRoleToken();
+//        // 设置roleToken
+//        TokenThreadUtil.setToken(roleToken);
+//        BaseResponse todoRoleTaskList = flowClient.getTodoTaskList(todoTaskQueryDTO);
+//        if (todoRoleTaskList.getCode() != 200){
+//            throw new BusinessException("系统异常");
+//        }
+//        List<Object> roleData = (ArrayList<Object>)todoRoleTaskList.getData();
+//        List<Object> data = (ArrayList<Object>)todoTaskList.getData();
+//        roleData.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "false");});
+//        data.forEach(item -> {((LinkedHashMap<String, Object>)item).put("isTransfer", "true");});
+//        data.addAll(roleData);
+//        return ResultUtils.success(data);
+//    }
 
 
     private BaseResponse<String> asyncGetResult(Long threadId){

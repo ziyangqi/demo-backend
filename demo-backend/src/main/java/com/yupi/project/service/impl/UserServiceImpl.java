@@ -108,8 +108,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
-        user.setToken(getToken(user.getUserName()));
-        user.setRoleToken(getToken(roleMapper.selectById(user.getId())));
+        user.setToken(getToken(roleMapper.selectById(user.getId()),user.getUserName()));
         return user;
     }
 
@@ -165,9 +164,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return true;
     }
 
-    private String getToken(String userNo) {
+    private String getToken(String userNo,String fullname) {
         AuthDTO authDTO = AuthDTO.builder()
                 .userId(userNo)
+                .fullname(fullname)
                 .appid("demo")
                 .secret("b5952c5490e8451696f1d96c4b57477b")
                 .build();
